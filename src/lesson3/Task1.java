@@ -15,7 +15,7 @@ public class Task1 {
         partHour(minutes);
     }
     
-    public static void partHour(int minutes) {
+    private static void partHour(int minutes) {
         if (isRange(minutes, 0, 15)) {
             System.out.println("Первая четверть часа.");
         } else if (isRange(minutes, 15, 30)) {
@@ -29,7 +29,7 @@ public class Task1 {
         }
     }
 
-    public static boolean isRange(int value, int begin, int endExcluded) {
+    private static boolean isRange(int value, int begin, int endExcluded) {
         return begin <= value && value < endExcluded;
     }
 }
