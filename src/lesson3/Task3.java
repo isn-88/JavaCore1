@@ -14,8 +14,8 @@ package lesson3;
 public class Task3 {
 
     public static void main(String[] args) {
-        int triangle1a = 8;
-        int triangle1b = 3;
+        int triangle1a = 4;
+        int triangle1b = 4;
         int triangle2a = 5;
         int triangle2b = 5;
         double squareTriangle1 = squareTriangle(triangle1a, triangle1b);
@@ -23,15 +23,15 @@ public class Task3 {
         triangleEquals(squareTriangle1, squareTriangle2);
     }
 
-    public static double squareTriangle(int a, int b) {
+    private static double squareTriangle(int a, int b) {
         return (double) (a * b) / 2;
     }
 
-    public static void triangleEquals(double square1, double square2) {
+    private static void triangleEquals(double square1, double square2) {
         if (square1 > square2) {
-            System.out.println("Первый треугольник больше (" + square1 + " > " + square2 + ")");
+            System.out.printf("Первый треугольник больше (%s > %s)\n", square1, square2);
         } else if (square1 < square2) {
-            System.out.println("Первый треугольник меньше (" + square1 + " < " + square2 + ")");
+            System.out.printf("Первый треугольник меньше (%s < %s)\n", square1, square2);
         } else {
             System.out.println("Треугольники равны");
         }
