@@ -1,4 +1,4 @@
-package lesson3a;
+package core.one.lesson3a;
 
 import java.math.BigInteger;
 import java.util.Scanner;

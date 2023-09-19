@@ -1,36 +1,37 @@
-package lesson3a;
+package core.one.lesson3a;
 
 
 import java.util.Scanner;
 
 /**
- * Задача 1.
- * N школьников делят K яблок поровну, не делящийся остаток остается в корзинке.
- * Сколько яблок достанется каждому школьнику?
+ * Задача 2.
+ * N школьников поделили K яблок поровну, не делящийся остаток остался в корзинке.
+ * Сколько яблок осталось в корзинке?
  * Формат ввода
- * Программа получает на вход числа N и K —  натуральные, не превышают 10000.
+ * Программа получает на вход числа N и K — натуральные, не превышают 10000.
  * Формат вывода
  * Выведите ответ на задачу.
  */
-public class Task1 {
+public class Task2 {
 
     private static final int MIN = 1;
     private static final int MAX = 10000;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Школьников: ");
         int n = waitInputCorrectValue(scanner);
         System.out.print("Яблок: ");
         int k = waitInputCorrectValue(scanner);
-        int count = k / n;
-        System.out.printf("Каждому школьнику по %d %s", count, applesToString(count));
+        int count = k % n;
+        System.out.printf("В корзинке осталось %d %s", count, applesToString(count));
     }
 
     private static String applesToString(int count) {
         int units = count % 10;
         int tens = count % 100;
         if (units == 1 && tens != 11) {
-            return "яблоку";
+            return "яблоко";
         } else if (2 <= units && units <= 4) {
             return "яблока";
         } else {
