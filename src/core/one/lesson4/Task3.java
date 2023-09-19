@@ -30,25 +30,18 @@ public class Task3 {
         double accountUp = getBalance(SALARY, COSTS, collect);
         double account = accountUp;
         double deposit = collect;
-        report(1, actualSalary, accountUp, account, collect, deposit);
         for (int monthCount = 2; monthCount <= totalMonths; monthCount++) {
             actualSalary = actualSalaryFromMonth(SALARY, SALARY_UP, EVERY_MONTHS, monthCount);
             collect = getMoneyOfPercent(actualSalary, COLLECT_PCT);
             accountUp = getBalance(actualSalary, COSTS, collect);
             account += accountUp;
             deposit += getProfit(deposit, BROKER_PCT) + collect;
-            report(monthCount, actualSalary, accountUp, account, collect, deposit);
         }
+        report(account, deposit);
     }
 
-    private static void report(int monthCount, double salary,
-                               double accountUp, double account,
-                               double depositUp, double deposit) {
-        String text = String.join(" || ",
-                "По итогу месяца: %d", "зарплата: %.2f",
-                "пополнение счёта: %.2f", "счёт: %.2f",
-                "пополнение депозита: %.2f", "депозит: %.2f\n");
-        System.out.printf(text, monthCount, salary, accountUp, account, depositUp, deposit);
+    private static void report(double account, double deposit) {
+        System.out.printf("Баланс счёта: %.2f$\nБаланс депозита: %.2f$", account, deposit);
     }
 
     private static double getProfit(double deposit, double percent) {

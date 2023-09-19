@@ -24,35 +24,11 @@ public class Task3 {
 
     public static void main(String[] args) {
 
-        System.out.println("Check null");
-        int[] valuesNull = null;
-        printArray(valuesNull);
-        printArray(splitArray(valuesNull));
-
-        System.out.println("\nCheck empty");
-        int[] valuesEmpty = {};
-        printArray(valuesEmpty);
-        printArray(splitArray(valuesEmpty));
-
-        System.out.println("\nCheck mixed");
         int[] valuesMixed = {-4, 0, 1, 9, 0, -18, 3};
+        System.out.println("Исходный массив:");
         printArray(valuesMixed);
+        System.out.println("Результирующие массивы:");
         printArray(splitArray(valuesMixed));
-
-        System.out.println("\nCheck only positive");
-        int[] valuesPos = {4, 10, 1, 9, 10, 18, 3};
-        printArray(valuesPos);
-        printArray(splitArray(valuesPos));
-
-        System.out.println("\nCheck only zero");
-        int[] valuesZero = {0, 0, 0, 0, 0, 0, 0};
-        printArray(valuesZero);
-        printArray(splitArray(valuesZero));
-
-        System.out.println("\nCheck only negative");
-        int[] valuesNeg = {-4, -10, -1, -9, -10, -18, -3};
-        printArray(valuesNeg);
-        printArray(splitArray(valuesNeg));
     }
 
     private static int[][] splitArray(int[] values) {
