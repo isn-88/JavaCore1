@@ -36,7 +36,7 @@ public class Task2 {
         if (builder.length() > 0) {
             int[] result = new int[builder.length()];
             for (int i = 0; i < builder.length(); i++) {
-                result[i] = Integer.parseInt(String.valueOf(builder.charAt(i)));
+                result[i] = Character.getNumericValue(builder.charAt(i));
             }
             return result;
         }
