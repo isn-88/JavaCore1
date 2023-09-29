@@ -1,4 +1,5 @@
-package core.two.lesson1;
+package core.two.lesson1.entity;
+
 
 public class Room {
 
@@ -12,8 +13,8 @@ public class Room {
     return isPassage;
   }
 
-  public void print() {
-    System.out.printf("Комната %s\n",
-                      isPassage ? "проходная" : "не проходная");
+  @Override
+  public String toString() {
+    return String.format("Комната %s\n", isPassage ? "проходная" : "не проходная");
   }
 }
