@@ -19,19 +19,32 @@ public class ATM {
         this.currency10 = currency10;
     }
 
-
-    public boolean addCurrency(int currency, int count) {
-        if (count <= 0) {
+    public static boolean checkInputValue(int count50, int count20, int count10) {
+        if (count50 < 0 || count20 < 0 || count10 < 0) {
             return false;
         }
-        boolean result = true;
-        switch (currency) {
-            case NOMINAL_50 -> currency50 += count;
-            case NOMINAL_20 -> currency20 += count;
-            case NOMINAL_10 -> currency10 += count;
-            default -> result = false;
+      return count50 != 0 || count20 != 0 || count10 != 0;
+    }
+
+    public static int getSumCurrency(int count50, int count20, int count10) {
+        if (!checkInputValue(count50, count20, count10)) {
+            return 0;
         }
-        return result;
+        return count50 * NOMINAL_50 + count20 * NOMINAL_20 + count10 * NOMINAL_10;
+    }
+
+    public boolean addCurrency(int count50, int count20, int count10) {
+        if (!checkInputValue(count50, count20, count10)) {
+            return false;
+        }
+        currency50 += count50;
+        currency20 += count20;
+        currency10 += count10;
+        return true;
+    }
+
+    public int getTotalMoney() {
+        return getSumCurrency(currency50, currency20, currency10);
     }
 
     public boolean getMoney(int value) {
@@ -44,18 +57,15 @@ public class ATM {
         }
 
         int reminder = value;
-        int count50 = Math.min(reminder / 50, currency50);
-        if (count50 > 0) {
-            reminder -= count50 * 50;
-        }
-        int count20 = Math.min(reminder / 20, currency20);
-        if (count20 > 0) {
-            reminder -= count20 * 20;
-        }
-        int count10 = Math.min(reminder / 10, currency10);
-        if (count10 > 0) {
-            reminder -= count10 * 10;
-        }
+        int count50 = getCurrencyCount(NOMINAL_50, reminder);
+        reminder = calcReminder(NOMINAL_50, count50, reminder);
+
+        int count20 = getCurrencyCount(NOMINAL_20, reminder);
+        reminder = calcReminder(NOMINAL_20, count20, reminder);
+
+        int count10 = getCurrencyCount(NOMINAL_10, reminder);
+        reminder = calcReminder(NOMINAL_10, count10, reminder);
+
         if (reminder == 0) {
             if (count50 <= currency50 && count20 <= currency20 && count10 <= currency10 &&
                 getSumCurrency(count50, count20, count10) == value) {
@@ -65,24 +75,29 @@ public class ATM {
         return false;
     }
 
-    public int getTotalMoney() {
-        return getSumCurrency(currency50, currency20, currency10);
+    private int getCurrencyCount(int nominal, int reminder) {
+        return switch (nominal) {
+            case NOMINAL_50 -> Math.min(reminder / NOMINAL_50, currency50);
+            case NOMINAL_20 -> Math.min(reminder / NOMINAL_20, currency20);
+            case NOMINAL_10 -> Math.min(reminder / NOMINAL_10, currency10);
+            default -> 0;
+        };
     }
 
-    private int getSumCurrency(int currency50, int currency20, int currency10) {
-        return currency50 * NOMINAL_50 + currency20 * NOMINAL_20 + currency10 * NOMINAL_10;
+    private int calcReminder(int nominal, int count, int reminder) {
+        return count > 0 ? reminder - count * nominal : reminder;
     }
 
     private boolean withdrawMoney(int nominal50, int nominal20, int nominal10) {
         if (isEnough(nominal50, nominal20, nominal10)) {
             if (nominal50 > 0) {
-                this.currency50 -= nominal50;
+                currency50 -= nominal50;
             }
             if (nominal20 > 0) {
-                this.currency20 -= nominal20;
+                currency20 -= nominal20;
             }
             if (nominal10 > 0) {
-                this.currency10 -= nominal10;
+                currency10 -= nominal10;
             }
             return true;
         }
@@ -98,5 +113,4 @@ public class ATM {
                (currency20 == 0 || (currency20 > 0 && this.currency20 >= currency20)) &&
                (currency10 == 0 || (currency10 > 0 && this.currency10 >= currency10));
     }
-
 }

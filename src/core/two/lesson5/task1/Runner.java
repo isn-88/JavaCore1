@@ -16,42 +16,68 @@ package core.two.lesson5.task1;
  * далее добавит недостающие 20, и только затем 10
  * (не нужно рассматривать более сложные варианты выдачи наличных, чтобы не усложнять алгоритм).
  */
-public class Task1 {
+public class Runner {
 
     public static void main(String[] args) {
+        new Runner().run();
+    }
+
+    public void run() {
         ATM sberATM = new ATM(2, 5, 10);
 
         printAvailableBalance(sberATM);
         withdrawMoney(sberATM, 160);
         printAvailableBalance(sberATM);
-        withdrawMoney(sberATM, 80);
+        withdrawMoney(sberATM, 90);
+        printAvailableBalance(sberATM);
+        withdrawMoney(sberATM, 60);
+        printAvailableBalance(sberATM);
+        addMoney(sberATM, 1, 2, 1);
         printAvailableBalance(sberATM);
         withdrawMoney(sberATM, 80);
         printAvailableBalance(sberATM);
-        addMoney(sberATM, ATM.NOMINAL_50, 1);
-        printAvailableBalance(sberATM);
-        withdrawMoney(sberATM, 80);
-        printAvailableBalance(sberATM);
-        withdrawMoney(sberATM, 30);
+        withdrawMoney(sberATM, 69);
         printAvailableBalance(sberATM);
     }
 
-    private static void withdrawMoney(ATM atm, int money) {
+    private void withdrawMoney(ATM atm, int money) {
         boolean success = atm.getMoney(money);
         System.out.printf("Операция по снятию %d денежных единиц %s\n",
                           money, success ? "завершилась успешно." : "отклонена.");
     }
 
-    private static void addMoney(ATM atm, int nominal, int count) {
-        boolean success = atm.addCurrency(nominal, count);
+    private void addMoney(ATM atm, int count50, int count20, int count10) {
+
+        boolean success = atm.addCurrency(count50, count20, count10);
         System.out.printf(
-            "Внесение купюр номиналом %d денежных единиц в количестве %d купюр %s\n",
-            nominal, count, success ? "завершилась успешно." : "отклонена."
+            "Внесение купюр %s%s\n",
+            success ? "завершилось успешно." : "завершилось с ошибкой.",
+            getCurrencyCount(count50, count20, count10)
         );
     }
 
-    private static void printAvailableBalance(ATM atm) {
-        System.out.printf("Доступный остаток для снятия %d\n",
-                          atm.getTotalMoney());
+    private String getCurrencyCount(int count50, int count20, int count10) {
+        if (!ATM.checkInputValue(count50, count20, count10)) {
+            return "\nУказано неверное количество купюр.";
+        }
+
+        final String patternCount = "\nНоминал: %d Количество: %d";
+        final String patternSum = "\nСумма: %d";
+        StringBuilder builder = new StringBuilder();
+        if (count50 > 0) {
+            builder.append(String.format(patternCount, ATM.NOMINAL_50, count50));
+        }
+        if (count20 > 0) {
+            builder.append(String.format(patternCount, ATM.NOMINAL_20, count20));
+        }
+        if (count10 > 0) {
+            builder.append(String.format(patternCount, ATM.NOMINAL_10, count10));
+        }
+        builder.append(String.format(patternSum, ATM.getSumCurrency(count50, count20, count10)));
+        return builder.toString();
+    }
+
+    private void printAvailableBalance(ATM atm) {
+        System.out.printf("Доступный остаток для снятия: %d\n", atm.getTotalMoney());
     }
 }
