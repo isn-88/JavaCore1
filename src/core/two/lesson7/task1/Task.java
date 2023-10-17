@@ -3,10 +3,8 @@ package core.two.lesson7.task1;
 import core.two.lesson7.task1.comparator.ChatCountComparator;
 import core.two.lesson7.task1.comparator.ChatNameComparator;
 import core.two.lesson7.task1.entity.Chat;
-import java.util.ArrayList;
-import java.util.Iterator;
+import core.two.lesson7.task1.util.ChatUtil;
 import java.util.List;
-
 
 /**
  * Задание 1
@@ -20,51 +18,18 @@ import java.util.List;
  */
 public class Task {
 
-  private static final List<Chat> CHATS = new ArrayList<>();
-
-  static {
-    CHATS.add(new Chat("DMdev", 1500));
-    CHATS.add(new Chat("Books", 999));
-    CHATS.add(new Chat("SQL for beginners", 1250));
-    CHATS.add(new Chat("Live codding", 1120));
-    CHATS.add(new Chat("Learn Java", 1120));
-    CHATS.add(new Chat("Soft skills", 820));
-    CHATS.add(new Chat("DevOps every day", 450));
-    CHATS.add(new Chat("Time to AI", 690));
-  }
-
   public static void main(String[] args) {
-    Task task = new Task();
 
-    List<Chat> chats = task.getChats();
+    List<Chat> chats = ChatUtil.getAllChats();
     System.out.println("Исходный список:\n" + chats);
-    task.removeIfCountLower(1000, chats);
+    ChatUtil.removeIfCountLower(1000, chats);
     System.out.println("После удаления:\n" + chats);
     chats.sort(new ChatCountComparator().thenComparing(new ChatNameComparator()));
     System.out.println("После сортировки:\n" + chats);
 
-    chats = task.getChats();
+    chats = ChatUtil.getAllChats();
     System.out.println("\nИсходный список:\n" + chats);
-    task.sortByName(chats);
+    ChatUtil.sortByName(chats);
     System.out.println("После сортировки по имени:\n" + chats);
-  }
-
-
-  public void removeIfCountLower(int count, List<Chat> chats) {
-    Iterator<Chat> chatIterator = chats.iterator();
-    while (chatIterator.hasNext()) {
-      Chat chat = chatIterator.next();
-      if (chat.getCount() < count) {
-        chatIterator.remove();
-      }
-    }
-  }
-
-  public void sortByName(List<Chat> chats) {
-    chats.sort(new ChatNameComparator());
-  }
-
-  public List<Chat> getChats() {
-    return new ArrayList<>(CHATS);
   }
 }

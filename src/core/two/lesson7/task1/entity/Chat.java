@@ -2,7 +2,6 @@ package core.two.lesson7.task1.entity;
 
 import java.util.Objects;
 
-
 public class Chat {
 
   private final String name;

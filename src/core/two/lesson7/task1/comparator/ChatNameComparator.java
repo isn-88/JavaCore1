@@ -3,7 +3,6 @@ package core.two.lesson7.task1.comparator;
 import core.two.lesson7.task1.entity.Chat;
 import java.util.Comparator;
 
-
 public class ChatNameComparator implements Comparator<Chat> {
 
   @Override

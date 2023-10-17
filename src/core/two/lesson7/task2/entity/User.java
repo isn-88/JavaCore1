@@ -2,7 +2,6 @@ package core.two.lesson7.task2.entity;
 
 import java.util.Objects;
 
-
 public class User {
 
   private final int id;

@@ -9,11 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-
 public class Cinema {
 
   private final Map<Integer, List<Film>> films = new TreeMap<>();
-
 
   public Cinema() {
   }
@@ -77,7 +75,7 @@ public class Cinema {
     for (List<Film> filmList : films.values()) {
       allFilms.addAll(filmList);
     }
-    allFilms.sort(new Comparator<Film>() {
+    allFilms.sort(new Comparator<>() {
       @Override
       public int compare(Film film1, Film film2) {
         return Double.compare(film2.getRating(), film1.getRating());

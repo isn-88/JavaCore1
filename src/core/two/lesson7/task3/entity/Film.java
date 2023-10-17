@@ -2,7 +2,6 @@ package core.two.lesson7.task3.entity;
 
 import java.util.Objects;
 
-
 public class Film {
 
   private final int id;
