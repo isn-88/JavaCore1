@@ -1,10 +1,9 @@
-package core.two.lesson9;
+package core.two.lesson9.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.OptionalDouble;
 
 public class Student {
 
@@ -57,10 +56,9 @@ public class Student {
   }
 
   public Double getAverageGrade() {
-    OptionalDouble average = grades.stream()
-        .mapToInt(g -> g)
-        .average();
-    return average.isPresent() ? average.getAsDouble() : 0;
+    return grades.stream()
+        .mapToInt(Integer::intValue)
+        .average().orElse(0);
   }
 
   @Override

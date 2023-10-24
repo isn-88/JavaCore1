@@ -2,7 +2,9 @@ package core.two.lesson9;
 
 import static core.two.lesson9.ReportUtil.*;
 
+import core.two.lesson9.model.Student;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Задание 1 Дан список студентов с полями: - Имя - Фамилия - Номер курса в университете - Список
@@ -20,13 +22,18 @@ import java.util.List;
  */
 public class Demo {
 
-  public static void main(String[] args) {
+  private static final int MARKS_COUNT = 3;
 
-    printAverageGradeOnCourse(getStudents());
-    System.out.println();
-    printStudentsOnCourse(getStudents());
-    System.out.println();
-    printStudentOnCourseAndAverageGrade(getStudents());
+  public static void main(String[] args) {
+    // средняя оценка студентов по всем курсам
+    printAverageGradeOnCourse(MARKS_COUNT, getStudents());
+
+    // отсортированный список имён студентов по всем курсам
+    Map<Integer, List<String>> courseAndStudentNames = coursesAndSortedStudentLists(getStudents());
+    printStudentsOnCourse(courseAndStudentNames);
+
+    // отсортированный список имён студентов и их средний балл по всем курсам
+    printStudentOnCourseAndAverageGrade(courseAndStudentNames, getStudents());
   }
 
   private static List<Student> getStudents() {
