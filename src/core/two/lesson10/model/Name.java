@@ -1,6 +1,6 @@
 package core.two.lesson10.model;
 
-import core.two.lesson10.util.NullableParser;
+import core.two.lesson10.util.ParserValidator;
 import java.util.Objects;
 
 public class Name {
@@ -25,7 +25,7 @@ public class Name {
       String sId = (values.length > 0) ? values[0] : null;
       name = (values.length > 1) ? values[1] : null;
       description = (values.length > 2) ? values[2] : null;
-      id = NullableParser.safeParseToInt(sId);
+      id = ParserValidator.safeParseToInt(sId);
     }
   }
 

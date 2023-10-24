@@ -1,8 +1,8 @@
 package core.two.lesson10.util;
 
-public final class NullableParser {
+public final class ParserValidator {
 
-  private NullableParser() {
+  private ParserValidator() {
   }
 
   public static Integer safeParseToInt(String value) {

@@ -4,41 +4,14 @@ import java.util.Objects;
 
 public class Item implements Comparable<Item> {
 
-  private Integer id;
-  private String name;
-  private Double price;
+  private final Integer id;
+  private final String name;
+  private final Double price;
 
   public Item(Integer id, String name, Double price) {
     this.id = id;
     this.name = name;
     this.price = price;
-  }
-
-  public Item(Price price) {
-    if (price != null) {
-      id = price.getId();
-      this.price = price.getPrice();
-    }
-  }
-
-  public Item(Name name) {
-    if (name != null) {
-      id = name.getId();
-      this.name = name.getName();
-    }
-  }
-
-  public Item merge(Item item2) {
-    if (item2 == null) {
-      return this;
-    }
-    if (price == null && item2.getPrice() != null) {
-      price = item2.getPrice();
-    }
-    if (name == null && item2.getName() != null) {
-      name = item2.getName();
-    }
-    return this;
   }
 
   public Integer getId() {

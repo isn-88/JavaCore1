@@ -2,7 +2,6 @@ package core.two.lesson10.util;
 
 import static java.nio.file.StandardOpenOption.*;
 import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
 
 import core.two.lesson10.model.Item;
 import core.two.lesson10.model.Price;
@@ -12,16 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.OptionalInt;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public final class ItemUtils {
 
@@ -29,16 +24,15 @@ public final class ItemUtils {
   }
 
   /**
-   * Считывает данные с ценами из файла и возвращает Map, где ключом является id, а значением
-   * объекты Item
+   * Считывает данные с ценами из файла и возвращает Map, где ключом является id,
+   * а значением объекты Price
    */
-  public static Map<Integer, Item> priceFromFile(Path path) {
+  public static Map<Integer, Price> priceFromFile(Path path) {
     try {
       return Files.readAllLines(path).stream()
           .skip(1)
           .map(Price::new)
-          .map(Item::new)
-          .collect(toMap(Item::getId, Function.identity()));
+          .collect(toMap(Price::getId, Function.identity()));
     } catch (IOException e) {
       System.err.printf("Can't not read file \n%s", e.getMessage());
       return new HashMap<>();
@@ -46,16 +40,15 @@ public final class ItemUtils {
   }
 
   /**
-   * Считывает данные с товарами из файла и возвращает Map, где ключом является id, а значением
-   * объекты Item
+   * Считывает данные с товарами из файла и возвращает Map, где ключом является id,
+   * а значением объекты Name
    */
-  public static Map<Integer, Item> nameFromFile(Path path) {
+  public static Map<Integer, Name> nameFromFile(Path path) {
     try {
       return Files.readAllLines(path).stream()
           .skip(1)
           .map(Name::new)
-          .map(Item::new)
-          .collect(toMap(Item::getId, Function.identity()));
+          .collect(toMap(Name::getId, Function.identity()));
     } catch (IOException e) {
       System.err.printf("Can't not read file \n%s", e.getMessage());
       return new HashMap<>();
@@ -63,43 +56,33 @@ public final class ItemUtils {
   }
 
   /**
-   * Объединяет различные данные из объектов Item с одинаковыми идентификаторами
+   * Объединяет Price и Name с одинаковыми идентификаторами,
+   * создавая на их основе новые объекты Item
    */
-  public static Map<Integer, Item> union(Map<Integer, Item> firstMap,
-                                         Map<Integer, Item> secondMap) {
-    if (firstMap == null || secondMap == null) {
-      if (firstMap != null) {
-        return firstMap;
-      } else if (secondMap != null) {
-        return secondMap;
-      } else {
-        return new HashMap<>();
-      }
-    }
-    return Stream.of(firstMap, secondMap)
-        .flatMap(map -> map.entrySet().stream())
-        .collect(toMap(Entry::getKey, Entry::getValue, Item::merge));
+  public static Map<Integer, Item> join(Map<Integer, Price> priceMap,
+                                        Map<Integer, Name> nameMap) {
+    return findIntersectIds(priceMap.keySet(), nameMap.keySet()).stream()
+        .map(id -> new Item(id, nameMap.get(id).getName(), priceMap.get(id).getPrice()))
+        .collect(Collectors.toMap(Item::getId, Function.identity()));
   }
 
   /**
-   * Возвращает множество свободных идентификаторов
+   * Возвращает только совпадающие значения в множествах
    */
-  public static Set<Integer> getEmptyIds(Map<Integer, Item> items) {
-    if (items == null) {
-      return new HashSet<>();
-    }
-    Set<Integer> keyItems = items.keySet();
-    OptionalInt maxOpt = keyItems.stream()
-        .mapToInt(k -> k)
-        .max();
-    if (maxOpt.isPresent()) {
-      Set<Integer> result = IntStream.range(1, maxOpt.getAsInt())
-          .boxed()
-          .collect(toSet());
-      result.removeAll(keyItems);
-      return result;
-    }
-    return new HashSet<>();
+  public static Set<Integer> findIntersectIds(Set<Integer> first, Set<Integer> second) {
+    Set<Integer> result = new TreeSet<>(first);
+    result.retainAll(second);
+    return result;
+  }
+
+  /**
+   * Возвращает только различающиеся значения в множествах
+   */
+  public static Set<Integer> findMinusIds(Set<Integer> first, Set<Integer> second) {
+    Set<Integer> result = new TreeSet<>(first);
+    result.addAll(second);
+    result.removeAll(findIntersectIds(first, second));
+    return result;
   }
 
   /**
@@ -125,9 +108,9 @@ public final class ItemUtils {
   }
 
   /**
-   * Сохраняет все свободные идентификаторы в файл csv
+   * Сохраняет все одиночные идентификаторы в файл csv
    */
-  public static void saveEmptyIdsToFile(Path path, Set<Integer> ids) {
+  public static void saveSingleIdsToFile(Path path, Set<Integer> ids) {
     List<String> sIds;
     if (ids != null) {
       sIds = ids.stream()

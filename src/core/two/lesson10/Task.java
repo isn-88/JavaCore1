@@ -1,8 +1,9 @@
 package core.two.lesson10;
 
 import core.two.lesson10.model.Item;
+import core.two.lesson10.model.Name;
+import core.two.lesson10.model.Price;
 import core.two.lesson10.util.ItemUtils;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -34,22 +35,27 @@ import java.util.Map;
  */
 public class Task {
 
-  public static void main(String[] args) throws IOException {
-    Path filePrice = Path.of("src", "resources", "lesson10", "items-price.csv");
-    Path fileName = Path.of("src", "resources", "lesson10", "items-name.csv");
+  private static final String PATH_1 = "src";
+  private static final String PATH_2 = "resources";
+  private static final String PATH_3 = "lesson10";
 
-    // read data and union to result
-    Map<Integer, Item> priceItems = ItemUtils.priceFromFile(filePrice);
-    Map<Integer, Item> nameItems = ItemUtils.nameFromFile(fileName);
-    Map<Integer, Item> result = ItemUtils.union(priceItems, nameItems);
+  public static void main(String[] args) {
+    Path filePrice = Path.of(PATH_1, PATH_2, PATH_3, "items-price.csv");
+    Path fileName = Path.of(PATH_1, PATH_2, PATH_3, "items-name.csv");
+
+    // read data and join to result
+    Map<Integer, Price> prices = ItemUtils.priceFromFile(filePrice);
+    Map<Integer, Name> names = ItemUtils.nameFromFile(fileName);
+    Map<Integer, Item> result = ItemUtils.join(prices, names);
 
     // write to result.csv
-    Path fileResult = Path.of("src", "resources", "lesson10", "result.csv");
+    Path fileResult = Path.of(PATH_1, PATH_2, PATH_3, "result.csv");
     ItemUtils.saveItemsToFile(fileResult, result);
 
     // write to error.csv
-    Path fileError = Path.of("src", "resources", "lesson10", "errors.csv");
-    ItemUtils.saveEmptyIdsToFile(fileError, ItemUtils.getEmptyIds(result));
+    Path fileError = Path.of(PATH_1, PATH_2, PATH_3, "errors.csv");
+    ItemUtils.saveSingleIdsToFile(fileError,
+                                  ItemUtils.findMinusIds(prices.keySet(), names.keySet()));
   }
 
 }

@@ -1,6 +1,6 @@
 package core.two.lesson10.model;
 
-import core.two.lesson10.util.NullableParser;
+import core.two.lesson10.util.ParserValidator;
 import java.util.Objects;
 
 public class Price {
@@ -22,8 +22,8 @@ public class Price {
       String[] values = text.split(delimiter, 2);
       String sId = (values.length > 0) ? values[0] : null;
       String sPrice = (values.length > 1) ? values[1] : null;
-      id = NullableParser.safeParseToInt(sId);
-      price = NullableParser.safeParseToDouble(sPrice);
+      id = ParserValidator.safeParseToInt(sId);
+      price = ParserValidator.safeParseToDouble(sPrice);
     }
   }
 
