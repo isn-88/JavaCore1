@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Wizard {
+public class Magician {
 
-  private final String name;
+  private final MagicianRace magicianRace;
 
-  private final List<Valuable> crystals = new ArrayList<>();
+  private final List<CrystalType> crystals = new ArrayList<>();
 
-  public Wizard(String name) {
-    this.name = name;
+  public Magician(MagicianRace magicianRace) {
+    this.magicianRace = magicianRace;
   }
 
-  public void addAll(Collection<Valuable> crystals) {
+  public void addAll(Collection<CrystalType> crystals) {
     this.crystals.addAll(crystals);
   }
 
   public int getCrystalCount(CrystalType type) {
     return crystals.stream()
-        .filter(c -> c.getType() == type)
+        .filter(c -> c == type)
         .mapToInt(c -> 1)
         .sum();
   }
@@ -33,6 +33,6 @@ public class Wizard {
   }
 
   public String getName() {
-    return name;
+    return magicianRace.getValue();
   }
 }

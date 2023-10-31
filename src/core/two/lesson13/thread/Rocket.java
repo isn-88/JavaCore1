@@ -2,16 +2,16 @@ package core.two.lesson13.thread;
 
 import core.two.lesson13.Game;
 import core.two.lesson13.Status;
-import core.two.lesson13.model.Wizard;
+import core.two.lesson13.model.Magician;
 
 public class Rocket implements Runnable {
 
   private final Game game;
-  private final Wizard wizard;
+  private final Magician magician;
 
-  public Rocket(Game game, Wizard wizard) {
+  public Rocket(Game game, Magician magician) {
     this.game = game;
-    this.wizard = wizard;
+    this.magician = magician;
   }
 
   @Override
@@ -23,11 +23,11 @@ public class Rocket implements Runnable {
         }
         while (game.getStatus() == Status.RUN) {
           synchronized (game.getCrystals()) {
-            wizard.addAll(game.getCrystals());
+            magician.addAll(game.getCrystals());
             game.getCrystals().clear();
           }
-          wizard.printInfo();
-          if (game.isWinner(wizard)) {
+          magician.printInfo();
+          if (game.isWinner(magician)) {
             break;
           }
           game.getLock().wait();

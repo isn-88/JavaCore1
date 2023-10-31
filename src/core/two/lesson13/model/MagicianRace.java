@@ -1,13 +1,13 @@
 package core.two.lesson13.model;
 
-public enum CrystalType {
+public enum MagicianRace {
 
-  RED("Red"),
-  WHITE("White");
+  FIRE("Fire"),
+  AIR("Air");
 
   private final String value;
 
-  CrystalType(String value) {
+  MagicianRace(String value) {
     this.value = value;
   }
 

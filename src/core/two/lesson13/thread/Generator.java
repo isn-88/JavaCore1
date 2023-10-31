@@ -2,7 +2,7 @@ package core.two.lesson13.thread;
 
 import core.two.lesson13.Game;
 import core.two.lesson13.Status;
-import core.two.lesson13.model.Valuable;
+import core.two.lesson13.model.CrystalType;
 import core.two.lesson13.util.CrystalGenerator;
 import java.util.Collection;
 
@@ -24,7 +24,7 @@ public class Generator implements Runnable {
         }
         while (game.getStatus() == Status.RUN) {
           synchronized (game.getCrystals()) {
-            Collection<Valuable> crystalGen = CrystalGenerator.generate(
+            Collection<CrystalType> crystalGen = CrystalGenerator.generate(
                 game.getMinCrystalPerDay(),
                 game.getMaxCrystalPerDay()
             );
@@ -39,7 +39,7 @@ public class Generator implements Runnable {
     }
   }
 
-  public void printInfo(Collection<Valuable> crystals) {
+  public void printInfo(Collection<CrystalType> crystals) {
     System.out.printf("Сгенерированы кристаллы: %s\n", crystals);
   }
 

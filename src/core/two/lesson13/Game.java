@@ -1,8 +1,8 @@
 package core.two.lesson13;
 
 import core.two.lesson13.model.CrystalType;
-import core.two.lesson13.model.Valuable;
-import core.two.lesson13.model.Wizard;
+import core.two.lesson13.model.Magician;
+import core.two.lesson13.model.MagicianRace;
 import core.two.lesson13.thread.Generator;
 import core.two.lesson13.thread.Rocket;
 import core.two.lesson13.thread.ThreadUtils;
@@ -14,7 +14,7 @@ public class Game {
 
   private Status status = Status.INIT;
   private final Object lock = new Object();
-  private final List<Valuable> crystals = new ArrayList<>();
+  private final List<CrystalType> crystals = new ArrayList<>();
   private final int minCrystalPerDay;
   private final int maxCrystalPerDay;
   private final int countCrystalForWinner;
@@ -30,17 +30,17 @@ public class Game {
     ThreadUtils.start(
         new Timer(this),
         new Generator(this),
-        new Rocket(this, new Wizard("Red")),
-        new Rocket(this, new Wizard("White"))
+        new Rocket(this, new Magician(MagicianRace.FIRE)),
+        new Rocket(this, new Magician(MagicianRace.AIR))
     );
   }
 
-  public boolean isWinner(Wizard wizard) {
-    int redCount = wizard.getCrystalCount(CrystalType.RED);
-    int whiteCount = wizard.getCrystalCount(CrystalType.WHITE);
+  public boolean isWinner(Magician magician) {
+    int redCount = magician.getCrystalCount(CrystalType.RED);
+    int whiteCount = magician.getCrystalCount(CrystalType.WHITE);
 
     if (redCount >= countCrystalForWinner && whiteCount >= countCrystalForWinner) {
-      System.out.printf("Маги %s победили со счётом: %s: %d %s: %d\n", wizard.getName(),
+      System.out.printf("Маги %s победили со счётом: %s: %d %s: %d\n", magician.getName(),
                         CrystalType.RED, redCount, CrystalType.WHITE, whiteCount);
       setStatus(Status.END);
       return true;
@@ -60,7 +60,7 @@ public class Game {
     this.status = status;
   }
 
-  public List<Valuable> getCrystals() {
+  public List<CrystalType> getCrystals() {
     return crystals;
   }
 
