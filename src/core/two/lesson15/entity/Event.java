@@ -9,8 +9,9 @@ public class Event {
 
   private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
   private static final String PHONE_FORMAT = "+375 (%s) %s-%s-%s";
-  private static final Pattern PHONE_PATTERN =
-      Pattern.compile("(\\+375)?[ -]?\\(?(\\d{2})\\)?[ -]?(\\d{3})[ -]?(\\d{2})[ -]?(\\d{2})");
+  private static final String NUMBER_PATTERN =
+      "(\\+375)?[ -]?\\(?(\\d{2})\\)?[ -]?(\\d{3})[ -]?(\\d{2})[ -]?(\\d{2})";
+  private static final Pattern PHONE_PATTERN = Pattern.compile(NUMBER_PATTERN);
 
   private final Integer id;
   private final LocalDateTime dateTime;

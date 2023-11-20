@@ -1,6 +1,6 @@
 package core.two.lesson15.util;
 
-import core.two.lesson15.repo.NameRepo;
+import core.two.lesson15.repository.NameRepo;
 import java.util.Random;
 
 public final class NameGenerator {

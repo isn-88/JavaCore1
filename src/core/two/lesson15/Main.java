@@ -42,11 +42,14 @@ import java.time.Duration;
  */
 public class Main {
 
+  private static final String EVENT_FILE= "events.csv";
+  private static final String CALLED_FILE = "called.csv";
+
   public static void main(String[] args) {
 
     new DemoRunner().start(
-        "events.csv", // source filename
-        "called.csv", // result filename
+        EVENT_FILE, // source filename
+        CALLED_FILE, // result filename
         Duration.ofSeconds(1), // producer delay
         Duration.ofSeconds(30), // consumer delay
         Duration.ofSeconds(3), // call delay min

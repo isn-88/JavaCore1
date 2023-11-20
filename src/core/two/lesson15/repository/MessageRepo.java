@@ -1,4 +1,4 @@
-package core.two.lesson15.repo;
+package core.two.lesson15.repository;
 
 import java.util.List;
 import java.util.Random;

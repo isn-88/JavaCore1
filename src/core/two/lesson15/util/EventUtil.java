@@ -1,7 +1,7 @@
 package core.two.lesson15.util;
 
 import core.two.lesson15.entity.Event;
-import core.two.lesson15.repo.MessageRepo;
+import core.two.lesson15.repository.MessageRepo;
 
 public final class EventUtil {
 
@@ -27,7 +27,11 @@ public final class EventUtil {
     if (column.length < 5) {
       return null;
     }
-    return new Event(column[0], column[1], column[2], column[3], column[4]);
+    return new Event(column[EventPosition.ID.ordinal()],
+                     column[EventPosition.DATE.ordinal()],
+                     column[EventPosition.NAME.ordinal()],
+                     column[EventPosition.PHONE.ordinal()],
+                     column[EventPosition.MESSAGE.ordinal()]);
   }
 
   public static Integer parseId(String line) {

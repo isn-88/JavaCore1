@@ -1,5 +1,6 @@
 package core.two.lesson15;
 
+import core.two.lesson15.exception.RunnerException;
 import core.two.lesson15.thread.EventConsumer;
 import core.two.lesson15.thread.EventInitTask;
 import core.two.lesson15.thread.EventProducer;
@@ -33,9 +34,7 @@ import java.util.concurrent.Future;
  */
 public class DemoRunner {
 
-  private static final String PATH_1 = "src";
-  private static final String PATH_2 = "resources";
-  private static final String PATH_3 = "lesson15";
+  private static final String PATH = "src/resources/lesson15";
 
 
   public void start(String sourceFilename, String resultFileName,
@@ -43,8 +42,8 @@ public class DemoRunner {
                     Duration callDelayMin, Duration callDelayMax,
                     int dispatcherCount) {
 
-    Path pathSource = Path.of(PATH_1, PATH_2, PATH_3, sourceFilename);
-    Path pathResult = Path.of(PATH_1, PATH_2, PATH_3, resultFileName);
+    Path pathSource = Path.of(PATH, sourceFilename);
+    Path pathResult = Path.of(PATH, resultFileName);
 
     try {
       ExecutorService producerPool = Executors.newSingleThreadExecutor();
@@ -74,7 +73,8 @@ public class DemoRunner {
       }
 
     } catch (ExecutionException | InterruptedException e) {
-      throw new RuntimeException(e);
+      System.err.println(e.getMessage());
+      throw new RunnerException("Error for execution");
     }
   }
 }

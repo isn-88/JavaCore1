@@ -6,8 +6,9 @@ import java.time.format.DateTimeFormatter;
 public final class TimeGenerator {
 
   private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-  private static final DateTimeFormatter OUTPUT_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+  private static final String PATTERN = "yyyy-MM-dd HH:mm";
+  private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern(PATTERN);
+
   private TimeGenerator() {
   }
 
